@@ -6,10 +6,10 @@ import com.example.focusonpaging.network.service.MyApiService
 
 class MyRepository(private val api: MyApiService) {
 
-    fun searchRepos(username: String) = Pager(
-        pagingSourceFactory = { MyPagingSource(api, username) },
+    fun searchRepos(query: String) = Pager(
+        pagingSourceFactory = { MyPagingSource(api, query) },
         config = PagingConfig(
-            pageSize = 20
+            pageSize = 10
         )
     ).flow
 

@@ -1,7 +1,13 @@
 package com.example.focusonpaging
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
+import android.view.Gravity
+import android.view.View
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,7 +19,6 @@ import com.example.focusonpaging.paging.MyRepository
 import com.example.focusonpaging.viewmodel.MyViewModel
 import com.example.focusonpaging.viewmodel.ViewModelFactory
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -22,6 +27,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MyViewModel
 
+    companion object {
+        private const val TAG = "MainActivity"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -29,7 +38,56 @@ class MainActivity : AppCompatActivity() {
 
         setupUI()
 
+        binding.imgMenu.setOnClickListener {
+           // binding.drawerLayout.openDrawer(Gravity.LEFT)
+        }
+
         setupViewModel()
+
+        filterListWithSearch()
+
+        updateListOnSelectAll()
+    }
+
+    private fun updateListOnSelectAll() {
+        binding.checkboxSelectAll.setOnClickListener {
+            repoAdapter.updateCheckBoxes(binding.checkboxSelectAll.isChecked)
+            if (binding.checkboxSelectAll.isChecked) {
+                binding.btnLayouts.visibility = View.VISIBLE
+            } else {
+                binding.btnLayouts.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun filterListWithSearch() {
+        binding.edtSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                Log.d(TAG, "onTextChanged: $p0")
+                if (p0?.length!! > 2) {
+                    fetchProducts(p0.toString())
+                } else {
+                    fetchProducts("*")
+                }
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+        })
+
+    }
+
+    private fun fetchProducts(query: String) {
+        lifecycleScope.launch {
+            viewModel.searchRepos(query).collect {
+                repoAdapter.submitData(it)
+            }
+        }
     }
 
     private fun setupUI() {
@@ -39,16 +97,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
-        viewModel = ViewModelProvider(this,
-            ViewModelFactory(MyRepository(MyApiService.create())))
-            .get(MyViewModel::class.java)
-
-        lifecycleScope.launch {
-
-            viewModel.searchRepos("google").collect {
-                repoAdapter.submitData(it)
-            }
-        }
-
+        viewModel = ViewModelProvider(
+            this, ViewModelFactory(MyRepository(MyApiService.create()))
+        ).get(MyViewModel::class.java)
+        fetchProducts("*")
     }
 }
