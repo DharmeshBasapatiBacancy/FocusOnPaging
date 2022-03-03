@@ -4,16 +4,17 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.Gravity
 import android.view.View
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.focusonpaging.adapter.RepoAdapter
 import com.example.focusonpaging.adapter.ReposLoadStateAdapter
 import com.example.focusonpaging.databinding.ActivityMainBinding
+import com.example.focusonpaging.databinding.HeaderFilterProductsBinding
+import com.example.focusonpaging.databinding.HeaderMainDrawerBinding
 import com.example.focusonpaging.network.service.MyApiService
 import com.example.focusonpaging.paging.MyRepository
 import com.example.focusonpaging.viewmodel.MyViewModel
@@ -39,7 +40,15 @@ class MainActivity : AppCompatActivity() {
         setupUI()
 
         binding.imgMenu.setOnClickListener {
-           // binding.drawerLayout.openDrawer(Gravity.LEFT)
+            binding.drawerLayout.openDrawer(GravityCompat.START)
+            binding.nvView.removeHeaderView(binding.nvView.getHeaderView(0))
+            binding.nvView.addHeaderView(HeaderMainDrawerBinding.inflate(layoutInflater).root)
+        }
+
+        binding.btnFilter.setOnClickListener {
+            binding.drawerLayout.openDrawer(GravityCompat.START)
+            binding.nvView.removeHeaderView(binding.nvView.getHeaderView(0))
+            binding.nvView.addHeaderView(HeaderFilterProductsBinding.inflate(layoutInflater).root)
         }
 
         setupViewModel()
