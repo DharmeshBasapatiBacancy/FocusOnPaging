@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imgMenu"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/ic_baseline_menu_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imgAppLogo"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/app_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imgMenu"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutBackToProducts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="#E4E1D8"
+        android:paddingVertical="20dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        app:layout_constraintTop_toBottomOf="@id/imgAppLogo">
+
+        <ImageView
+            android:id="@+id/imgBackArrow"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/red" />
+
+        <TextView
+            android:id="@+id/tvBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="Back to products"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/imgBackArrow"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tvItemName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:maxLines="2"
+        android:padding="10dp"
+        android:text="Mcintyre's Dog Dental Treat Small 7 Pack Something else"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/tvItemPrice"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layoutBackToProducts" />
+
+    <TextView
+        android:id="@+id/tvItemPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:maxLines="1"
+        android:padding="10dp"
+        android:text="£1.00"
+        android:textColor="#50AABC"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layoutBackToProducts" />
+
+    <TextView
+        android:id="@+id/tvSKUs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:paddingStart="10dp"
+        android:text="SKU: 327345"
+        android:textColor="#666666"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvItemName" />
+
+    <TextView
+        android:id="@+id/tvItemInOutStock"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:maxLines="1"
+        android:text="In stock"
+        android:textColor="#509E46"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/tvSKUs"
+        app:layout_constraintTop_toBottomOf="@id/tvItemName" />
+
+    <TextView
+        android:id="@+id/tvLabelInOutStock"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="25dp"
+        android:gravity="center"
+        android:text="Stock on hand"
+        android:textColor="#666666"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/tvLabelReOrderPoint"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvSKUs" />
+
+    <TextView
+        android:id="@+id/tvLabelReOrderPoint"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:gravity="center"
+        android:text="Re-order point"
+        android:textColor="#666666"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/tvLabelReOrderQty"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvLabelInOutStock"
+        app:layout_constraintTop_toBottomOf="@id/tvSKUs" />
+
+    <TextView
+        android:id="@+id/tvLabelReOrderQty"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="center"
+        android:text="Re-order quantity"
+        android:textColor="#666666"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvLabelReOrderPoint"
+        app:layout_constraintTop_toBottomOf="@id/tvSKUs" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/btnLayouts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:elevation="20dp"
+        android:paddingVertical="20dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:text="De-Range"
+            android:textColor="@color/white"
+            app:backgroundTint="#ff0000"
+            app:cornerRadius="15dp"
+            app:icon="@drawable/ic_derange"
+            app:iconSize="18dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/guideLine"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideLine"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="Print Label"
+            android:textColor="@color/white"
+            app:backgroundTint="@color/black"
+            app:cornerRadius="15dp"
+            app:icon="@drawable/ic_printlabel"
+            app:iconSize="18dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/guideLine"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
