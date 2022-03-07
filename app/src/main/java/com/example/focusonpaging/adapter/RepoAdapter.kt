@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.focusonpaging.R
 import com.example.focusonpaging.databinding.ItemReposBinding
 import com.example.focusonpaging.network.model.Hit
 
@@ -30,8 +31,20 @@ class RepoAdapter : PagingDataAdapter<Hit, RepoAdapter.ViewHolder>(COMPARATOR) {
         private val binding: ItemReposBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(repo: Hit) = with(binding) {
-            tvItemRepos.text = repo.document.name
+            tvItemName.text = repo.document.name
             checkbox.isChecked = isSelectAll
+            if(checkbox.isChecked){
+                rootLayout.setBackgroundColor(itemView.resources.getColor(R.color.lightGrey))
+            }else{
+                rootLayout.setBackgroundColor(itemView.resources.getColor(R.color.white))
+            }
+            checkbox.setOnClickListener {
+                if(checkbox.isChecked){
+                    rootLayout.setBackgroundColor(itemView.resources.getColor(R.color.lightGrey))
+                }else{
+                    rootLayout.setBackgroundColor(itemView.resources.getColor(R.color.white))
+                }
+            }
         }
     }
 

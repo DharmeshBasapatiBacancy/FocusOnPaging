@@ -5,8 +5,7 @@
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:openDrawer="start">
+    android:fitsSystemWindows="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -17,7 +16,7 @@
             android:id="@+id/imgMenu"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="20dp"
             android:src="@drawable/ic_baseline_menu_24"
             app:layout_constraintStart_toStartOf="parent"
@@ -37,8 +36,9 @@
             android:id="@+id/edtSearch"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:layout_marginHorizontal="10dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/custom_round_edged_rect"
             android:drawableEnd="@drawable/ic_baseline_search_24"
             android:hint="Search by SKU or keywords"
@@ -49,25 +49,6 @@
             app:layout_constraintEnd_toStartOf="@id/imgScanner"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imgAppLogo" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnFilter"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:text="Filter Products"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            app:backgroundTint="@color/white"
-            app:cornerRadius="15dp"
-            app:icon="@drawable/ic_baseline_filter_alt_24"
-            app:iconSize="18dp"
-            app:iconTint="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edtSearch"
-            app:strokeColor="#ff0000"
-            app:strokeWidth="2dp" />
 
         <ImageView
             android:id="@+id/imgScanner"
@@ -81,23 +62,55 @@
             app:layout_constraintTop_toBottomOf="@id/imgAppLogo"
             app:tint="@color/black" />
 
-        <CheckBox
-            android:id="@+id/checkboxSelectAll"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutFilter"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:text="Select All"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edtSearch" />
+            android:layout_marginTop="20dp"
+            android:background="#E4E1D8"
+            android:paddingVertical="10dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            app:layout_constraintTop_toBottomOf="@id/edtSearch">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnFilter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="30dp"
+                android:paddingVertical="10dp"
+                android:text="Filter Products"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                app:backgroundTint="@color/white"
+                app:cornerRadius="25dp"
+                app:icon="@drawable/ic_baseline_filter_alt_24"
+                app:iconSize="18dp"
+                app:iconTint="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="#E01514"
+                app:strokeWidth="1dp" />
+
+            <CheckBox
+                android:id="@+id/checkboxSelectAll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
+                android:text="Select All"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvRepos"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnFilter"
+            app:layout_constraintTop_toBottomOf="@id/layoutFilter"
             tools:listitem="@layout/item_repos" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -105,6 +118,7 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:background="@color/white"
+            android:elevation="20dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent">
 

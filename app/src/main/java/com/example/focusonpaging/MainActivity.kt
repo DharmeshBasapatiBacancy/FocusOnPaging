@@ -5,10 +5,12 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.focusonpaging.adapter.RepoAdapter
 import com.example.focusonpaging.adapter.ReposLoadStateAdapter
@@ -62,8 +64,10 @@ class MainActivity : AppCompatActivity() {
         binding.checkboxSelectAll.setOnClickListener {
             repoAdapter.updateCheckBoxes(binding.checkboxSelectAll.isChecked)
             if (binding.checkboxSelectAll.isChecked) {
+                binding.checkboxSelectAll.text = "Unselect All"
                 binding.btnLayouts.visibility = View.VISIBLE
             } else {
+                binding.checkboxSelectAll.text = "Select All"
                 binding.btnLayouts.visibility = View.GONE
             }
         }
@@ -102,6 +106,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupUI() {
         repoAdapter = RepoAdapter()
         binding.rvRepos.layoutManager = LinearLayoutManager(this)
+        binding.rvRepos.addItemDecoration(DividerItemDecoration(this,LinearLayout.VERTICAL))
         binding.rvRepos.adapter = repoAdapter.withLoadStateFooter(footer = ReposLoadStateAdapter())
     }
 
