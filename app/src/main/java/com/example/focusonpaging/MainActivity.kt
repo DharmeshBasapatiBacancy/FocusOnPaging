@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
@@ -17,15 +18,25 @@ import com.example.focusonpaging.adapter.ReposLoadStateAdapter
 import com.example.focusonpaging.databinding.ActivityMainBinding
 import com.example.focusonpaging.databinding.HeaderFilterProductsBinding
 import com.example.focusonpaging.databinding.HeaderMainDrawerBinding
+import com.example.focusonpaging.databinding.ItemProductsBinding
 import com.example.focusonpaging.network.service.MyApiService
 import com.example.focusonpaging.paging.MyRepository
+import com.example.focusonpaging.utils.SwipeController
 import com.example.focusonpaging.viewmodel.MyViewModel
 import com.example.focusonpaging.viewmodel.ViewModelFactory
+import com.nikhilpanju.recyclerviewenhanced.OnActivityTouchListener
+import com.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener
+import com.nikhilpanju.recyclerviewenhanced.RecyclerTouchListener.OnRowClickListener
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class MainActivity : AppCompatActivity() {
 
+class MainActivity : AppCompatActivity(), RecyclerTouchListener.RecyclerTouchListenerHelper {
+
+    private var touchListener: OnActivityTouchListener? = null
+    private lateinit var onTouchListener: RecyclerTouchListener
+    private lateinit var swipeController: SwipeController
+    private var swipeBack: Boolean = false
     private lateinit var repoAdapter: RepoAdapter
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MyViewModel
@@ -64,10 +75,10 @@ class MainActivity : AppCompatActivity() {
         binding.checkboxSelectAll.setOnClickListener {
             repoAdapter.updateCheckBoxes(binding.checkboxSelectAll.isChecked)
             if (binding.checkboxSelectAll.isChecked) {
-                binding.checkboxSelectAll.text = "Unselect All"
+                //binding.checkboxSelectAll.text = "Unselect All"
                 binding.btnLayouts.visibility = View.VISIBLE
             } else {
-                binding.checkboxSelectAll.text = "Select All"
+                //binding.checkboxSelectAll.text = "Select All"
                 binding.btnLayouts.visibility = View.GONE
             }
         }
@@ -106,8 +117,49 @@ class MainActivity : AppCompatActivity() {
     private fun setupUI() {
         repoAdapter = RepoAdapter()
         binding.rvRepos.layoutManager = LinearLayoutManager(this)
-        binding.rvRepos.addItemDecoration(DividerItemDecoration(this,LinearLayout.VERTICAL))
+        binding.rvRepos.addItemDecoration(DividerItemDecoration(this, LinearLayout.VERTICAL))
         binding.rvRepos.adapter = repoAdapter.withLoadStateFooter(footer = ReposLoadStateAdapter())
+
+        onTouchListener = RecyclerTouchListener(this, binding.rvRepos)
+        onTouchListener
+            .setClickable(object : OnRowClickListener {
+                override fun onRowClicked(position: Int) {
+
+                }
+
+                override fun onIndependentViewClicked(independentViewID: Int, position: Int) {
+
+                }
+            })
+            .setSwipeOptionViews(
+                ItemProductsBinding.inflate(layoutInflater).printLabel.id,
+                ItemProductsBinding.inflate(layoutInflater).deRange.id
+            )
+            .setSwipeable(
+                ItemProductsBinding.inflate(layoutInflater).rowFG.id,
+                ItemProductsBinding.inflate(layoutInflater).rowBG.id
+            ) { viewID, position ->
+                var message = ""
+                if (viewID == ItemProductsBinding.inflate(layoutInflater).printLabel.id) {
+                    message += "Print Label"
+                } else if (viewID == ItemProductsBinding.inflate(layoutInflater).deRange.id) {
+                    message += "De-Range"
+                }
+                message += " clicked for row " + (position + 1) + "Name = $repoAdapter.get"
+                Log.d(TAG, "setupUI: $message")
+
+            }
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.rvRepos.addOnItemTouchListener(onTouchListener)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.rvRepos.removeOnItemTouchListener(onTouchListener)
     }
 
     private fun setupViewModel() {
@@ -115,5 +167,14 @@ class MainActivity : AppCompatActivity() {
             this, ViewModelFactory(MyRepository(MyApiService.create()))
         ).get(MyViewModel::class.java)
         fetchProducts("*")
+    }
+
+    override fun setOnActivityTouchListener(listener: OnActivityTouchListener?) {
+        this.touchListener = listener
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        touchListener?.getTouchCoordinates(ev)
+        return super.dispatchTouchEvent(ev)
     }
 }

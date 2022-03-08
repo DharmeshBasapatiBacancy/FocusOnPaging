@@ -6,7 +6,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.focusonpaging.R
-import com.example.focusonpaging.databinding.ItemReposBinding
+import com.example.focusonpaging.databinding.ItemProductsBinding
 import com.example.focusonpaging.network.model.Hit
 
 class RepoAdapter : PagingDataAdapter<Hit, RepoAdapter.ViewHolder>(COMPARATOR) {
@@ -22,27 +22,31 @@ class RepoAdapter : PagingDataAdapter<Hit, RepoAdapter.ViewHolder>(COMPARATOR) {
         }
     }
 
+    override fun getItemViewType(position: Int): Int {
+        return super.getItemViewType(position)
+    }
+
     fun updateCheckBoxes(isAllSelected: Boolean){
         isSelectAll = isAllSelected
         notifyDataSetChanged()
     }
 
     class ViewHolder(
-        private val binding: ItemReposBinding
+        private val binding: ItemProductsBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(repo: Hit) = with(binding) {
             tvItemName.text = repo.document.name
             checkbox.isChecked = isSelectAll
             if(checkbox.isChecked){
-                rootLayout.setBackgroundColor(itemView.resources.getColor(R.color.lightGrey))
+                rowFG.setBackgroundColor(itemView.resources.getColor(R.color.lightGrey))
             }else{
-                rootLayout.setBackgroundColor(itemView.resources.getColor(R.color.white))
+                rowFG.setBackgroundColor(itemView.resources.getColor(R.color.white))
             }
             checkbox.setOnClickListener {
                 if(checkbox.isChecked){
-                    rootLayout.setBackgroundColor(itemView.resources.getColor(R.color.lightGrey))
+                    rowFG.setBackgroundColor(itemView.resources.getColor(R.color.lightGrey))
                 }else{
-                    rootLayout.setBackgroundColor(itemView.resources.getColor(R.color.white))
+                    rowFG.setBackgroundColor(itemView.resources.getColor(R.color.white))
                 }
             }
         }
@@ -53,6 +57,6 @@ class RepoAdapter : PagingDataAdapter<Hit, RepoAdapter.ViewHolder>(COMPARATOR) {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
-        ItemReposBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        ItemProductsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
     )
 }
