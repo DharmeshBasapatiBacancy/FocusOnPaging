@@ -22,10 +22,10 @@ import androidx.core.view.isVisible
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
 import com.example.focusonpaging.R
-import com.example.focusonpaging.databinding.ReposLoadStateFooterViewItemBinding
+import com.example.focusonpaging.databinding.ProductsLoadStateFooterViewItemBinding
 
-class ReposLoadStateViewHolder(
-    private val binding: ReposLoadStateFooterViewItemBinding,
+class ProductsLoadStateViewHolder(
+    private val binding: ProductsLoadStateFooterViewItemBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(loadState: LoadState) {
@@ -35,11 +35,11 @@ class ReposLoadStateViewHolder(
     }
 
     companion object {
-        fun create(parent: ViewGroup): ReposLoadStateViewHolder {
+        fun create(parent: ViewGroup): ProductsLoadStateViewHolder {
             val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.repos_load_state_footer_view_item, parent, false)
-            val binding = ReposLoadStateFooterViewItemBinding.bind(view)
-            return ReposLoadStateViewHolder(binding)
+                .inflate(R.layout.products_load_state_footer_view_item, parent, false)
+            val binding = ProductsLoadStateFooterViewItemBinding.bind(view)
+            return ProductsLoadStateViewHolder(binding)
         }
     }
 }

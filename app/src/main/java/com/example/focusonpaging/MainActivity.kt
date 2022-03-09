@@ -13,8 +13,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.focusonpaging.adapter.RepoAdapter
-import com.example.focusonpaging.adapter.ReposLoadStateAdapter
+import com.example.focusonpaging.adapter.ProductsAdapter
+import com.example.focusonpaging.adapter.ProductsLoadStateAdapter
 import com.example.focusonpaging.databinding.ActivityMainBinding
 import com.example.focusonpaging.databinding.HeaderFilterProductsBinding
 import com.example.focusonpaging.databinding.HeaderMainDrawerBinding
@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity(), RecyclerTouchListener.RecyclerTouchLis
     private lateinit var onTouchListener: RecyclerTouchListener
     private lateinit var swipeController: SwipeController
     private var swipeBack: Boolean = false
-    private lateinit var repoAdapter: RepoAdapter
+    private lateinit var productsAdapter: ProductsAdapter
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MyViewModel
 
@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity(), RecyclerTouchListener.RecyclerTouchLis
 
     private fun updateListOnSelectAll() {
         binding.checkboxSelectAll.setOnClickListener {
-            repoAdapter.updateCheckBoxes(binding.checkboxSelectAll.isChecked)
+            productsAdapter.updateCheckBoxes(binding.checkboxSelectAll.isChecked)
             if (binding.checkboxSelectAll.isChecked) {
                 //binding.checkboxSelectAll.text = "Unselect All"
                 binding.btnLayouts.visibility = View.VISIBLE
@@ -109,16 +109,16 @@ class MainActivity : AppCompatActivity(), RecyclerTouchListener.RecyclerTouchLis
     private fun fetchProducts(query: String) {
         lifecycleScope.launch {
             viewModel.searchRepos(query).collect {
-                repoAdapter.submitData(it)
+                productsAdapter.submitData(it)
             }
         }
     }
 
     private fun setupUI() {
-        repoAdapter = RepoAdapter()
+        productsAdapter = ProductsAdapter()
         binding.rvRepos.layoutManager = LinearLayoutManager(this)
         binding.rvRepos.addItemDecoration(DividerItemDecoration(this, LinearLayout.VERTICAL))
-        binding.rvRepos.adapter = repoAdapter.withLoadStateFooter(footer = ReposLoadStateAdapter())
+        binding.rvRepos.adapter = productsAdapter.withLoadStateFooter(footer = ProductsLoadStateAdapter())
 
         onTouchListener = RecyclerTouchListener(this, binding.rvRepos)
         onTouchListener
@@ -145,7 +145,7 @@ class MainActivity : AppCompatActivity(), RecyclerTouchListener.RecyclerTouchLis
                 } else if (viewID == ItemProductsBinding.inflate(layoutInflater).deRange.id) {
                     message += "De-Range"
                 }
-                message += " clicked for row " + (position + 1) + "Name = $repoAdapter.get"
+                message += " clicked for row " + (position + 1) + "Name = $productsAdapter.get"
                 Log.d(TAG, "setupUI: $message")
 
             }

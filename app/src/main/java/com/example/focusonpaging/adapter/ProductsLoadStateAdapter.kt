@@ -20,13 +20,13 @@ import android.view.ViewGroup
 import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 
-class ReposLoadStateAdapter(
-) : LoadStateAdapter<ReposLoadStateViewHolder>() {
-    override fun onBindViewHolder(holder: ReposLoadStateViewHolder, loadState: LoadState) {
+class ProductsLoadStateAdapter(
+) : LoadStateAdapter<ProductsLoadStateViewHolder>() {
+    override fun onBindViewHolder(holder: ProductsLoadStateViewHolder, loadState: LoadState) {
         holder.bind(loadState)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, loadState: LoadState): ReposLoadStateViewHolder {
-        return ReposLoadStateViewHolder.create(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, loadState: LoadState): ProductsLoadStateViewHolder {
+        return ProductsLoadStateViewHolder.create(parent)
     }
 }

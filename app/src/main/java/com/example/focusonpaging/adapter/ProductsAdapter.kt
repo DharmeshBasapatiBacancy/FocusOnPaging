@@ -9,7 +9,7 @@ import com.example.focusonpaging.R
 import com.example.focusonpaging.databinding.ItemProductsBinding
 import com.example.focusonpaging.network.model.Hit
 
-class RepoAdapter : PagingDataAdapter<Hit, RepoAdapter.ViewHolder>(COMPARATOR) {
+class ProductsAdapter : PagingDataAdapter<Hit, ProductsAdapter.ViewHolder>(COMPARATOR) {
 
     companion object {
         private var isSelectAll = false
@@ -36,6 +36,11 @@ class RepoAdapter : PagingDataAdapter<Hit, RepoAdapter.ViewHolder>(COMPARATOR) {
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(repo: Hit) = with(binding) {
             tvItemName.text = repo.document.name
+            tvSKUs.text = "SKU: ${repo.document.sku}"
+            tvItemPrice.text = "£${repo.document.price_including_tax}"
+            tvItemInOutStock.text = "${repo.document.inventory_level} ${repo.document.stock_status}"
+            tvItemReOrderPoint.text = repo.document.reorder_point
+
             checkbox.isChecked = isSelectAll
             if(checkbox.isChecked){
                 rowFG.setBackgroundColor(itemView.resources.getColor(R.color.lightGrey))
@@ -52,7 +57,7 @@ class RepoAdapter : PagingDataAdapter<Hit, RepoAdapter.ViewHolder>(COMPARATOR) {
         }
     }
 
-    override fun onBindViewHolder(holder: RepoAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ProductsAdapter.ViewHolder, position: Int) {
         getItem(position)?.let { holder.bind(it) }
     }
 
